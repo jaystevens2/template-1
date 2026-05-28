@@ -1,5 +1,7 @@
 #include "main.h"
 
+ASSET(path_txt_jay_txt);//means path.txt.jay.txt
+
 // --- Motors ---
 // Standard PROS motor groups. (Negative ports reverse the motor)
 MotorGroup leftMotors({1, 9});
@@ -73,6 +75,12 @@ void competition_initialize() {}
 
 void autonomous() {}
 
+void follow_path (){
+    chassis.setPose(0, 0, 0);
+    chassis.follow(path_txt_jay_txt, 15, 20000);
+    chassis.waitUntilDone();
+}
+
 /**
  * Runs the operator control code.
  */
@@ -103,9 +111,7 @@ void opcontrol() {
 
         // --- Metric Movement Test (~30cm) ---
         if (master.get_digital_new_press(DIGITAL_X)) {
-            chassis.setPose(0, 0, 0);
-            chassis.moveToPoint(0, 11.81, 2000);
-            chassis.waitUntilDone();
+            follow_path();
         }
 
         //Intake Control
